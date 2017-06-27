@@ -1,6 +1,5 @@
 #include "SkillsComponent.h"
 
-
 // Sets default values for this component's properties
 USkillsComponent::USkillsComponent()
 {
@@ -11,20 +10,17 @@ USkillsComponent::USkillsComponent()
 
 }
 
-
 // Called when the game starts
 void USkillsComponent::BeginPlay()
 {
     Super::BeginPlay();
 
-    for (auto Skill : SkillsArray)
-    {
-        Skill->GetDefaultObject<ASkill>()->ResetLevel();
-    }
+    //Reseting the level of each skill
+    for (auto Skill : SkillsArray) Skill->GetDefaultObject<ASkill>()->ResetLevel();
 
     AvailableSkillPoints = InitialAvailableSkillsPoints;
-    
 }
+
 
 UTexture* USkillsComponent::GetSkillTexture(int32 SkillNum)
 {
@@ -49,14 +45,10 @@ ASkill* USkillsComponent::GetSkillByType(ESkillType SkillType)
     for (auto It : SkillsArray)
     {
         ASkill* Skill = It->GetDefaultObject<ASkill>();
-        if (Skill->GetSkillType() == SkillType)
-        {
-            return Skill;
-        }
+        if (Skill->GetSkillType() == SkillType) return Skill;
     }
     return nullptr;
 }
-
 
 int32 USkillsComponent::AdvanceSkillLevel(ASkill* SkillToLevelUp)
 {
@@ -66,14 +58,8 @@ int32 USkillsComponent::AdvanceSkillLevel(ASkill* SkillToLevelUp)
         SkillToLevelUp->AdvanceLevel();
         return SkillToLevelUp->GetLevel();
     }
-    else if (SkillToLevelUp)
-    {
-        return SkillToLevelUp->GetLevel();
-    }
-    else
-    {
-        return 0;
-    }
+    else if (SkillToLevelUp) return SkillToLevelUp->GetLevel();
+    else return 0;
 }
 
 void USkillsComponent::ResetSkillPoints()
