@@ -45,6 +45,26 @@ ASkillsTreeCharacter::ASkillsTreeCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+
+
+	// ---- Skill code
+	// ---------------------
+	SkillsRootComp = CreateDefaultSubobject<USceneComponent>(FName("SkillsRootComp"));
+	SkillsRootComp->SetupAttachment(RootComponent);
+
+	// create the spring arm components
+	LevelOneSpringArm = CreateDefaultSubobject<USpringArmComponent>(FName("LevelOneSpringArm"));
+	LevelTwoSpringArm = CreateDefaultSubobject<USpringArmComponent>(FName("LevelTwoSpringArm"));
+	LevelThreeSpringArm = CreateDefaultSubobject<USpringArmComponent>(FName("LevelThreeSpringArm"));
+
+	LevelOneSpringArm->SetupAttachment(SkillsRootComp);
+	LevelTwoSpringArm->SetupAttachment(SkillsRootComp);
+	LevelThreeSpringArm->SetupAttachment(SkillsRootComp);
+
+	// !! USkillComponent instaad USkillsComponent
+	SkillsComponent = CreateDefaultSubobject<USkillComponent>(FName("SkillsComponent"));
+
+
 }
 
 //////////////////////////////////////////////////////////////////////////
