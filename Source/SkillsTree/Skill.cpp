@@ -3,12 +3,6 @@
 
 #include "Skill.h"
 
-#include "Components/SphereComponent.h"
-#include "GameFramework/ProjectileMovementComponent.h"
-#include "Particles/ParticleSystemComponent.h"
-#include "ParticleDefinitions.h"
-
-
 // Sets default values
 ASkill::ASkill()
 {
@@ -42,14 +36,6 @@ void ASkill::BeginPlay()
         ParticleComp->Activate();
     }	
 }
-
-// Called every frame
-void ASkill::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 
 void ASkill::OnConstruction(const FTransform& Transform)
 {

@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "Particles/ParticleSystemComponent.h"
+#include "ParticleDefinitions.h"
 #include "Skill.generated.h"
 
 UENUM(BlueprintType)
@@ -21,78 +25,73 @@ class SKILLSTREE_API ASkill : public AActor
 private:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpusle, const FHitResult& Hit);
-	
+
 public:	
 	// Sets default values for this actor's properties
 	ASkill();
 
-protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	virtual void OnConstruction(const FTransform& Transform) override;
-	
-	/** Increease the level by one, clamp on max level */
-	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
-	void AdvanceLevel() { CurrentLevel + 1 > MaxLevel ? 1 : ++CurrentLevel; }
 
-	
-	/** Returns the level of the current skill */
-	UFUNCTION(BlueprintCallable,Category = TLSkillsTree)
-	int32 GetLevel() { return CurrentLevel; }
+	/*Increases the level by one - clamps on max level*/
+	UFUNCTION(BlueprintCallable,Category=TLSkillsTree)
+	void AdvanceLevel() { CurrentLevel = (CurrentLevel + 1 > MaxLevel) ? 1 : ++CurrentLevel; }
 
-	/** reset the level of the skills - 0 that meens that the playes will not be able to fire */
-	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
+	/*Resets the level of the skill - 0 means that the player will not be able to fire*/
+	UFUNCTION(BlueprintCallable,Category=TLSkillsTree)
 	void ResetLevel() { CurrentLevel = 0; }
 
-	/** Return the level of current skill */
-	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
+	/*Returns the level of the current skill*/
+	UFUNCTION(BlueprintCallable,Category=TLSkillsTree)
+	int32 GetLevel() { return CurrentLevel; }
+
+	/*Returns the skill's texture*/
+	UFUNCTION(BlueprintCallable,Category=TLSkillsTree)
 	UTexture* GetSkillTexture() { return SkillTexture; }
 
-	/** Return skill type */
+	/*Returns the skill type*/
 	ESkillType GetSkillType() { return SkillType; }
 
-	/** Return true if the level is maxed out */
+	/*Returns true if the level is maxed out*/
 	bool IsMaxLevel() { return CurrentLevel == MaxLevel; }
 
 private:
 	int32 CurrentLevel = 1;
+
 	int32 MaxLevel = 3;
 
 protected:
-	/** Sphere comp used for collision */
+	/*Sphere comp used for collision*/
 	UPROPERTY(VisibleAnywhere)
-	class USphereComponent* SphereComp;
+	USphereComponent* SphereComp;
 
-	/** This component is used to simulate the movement of our skill */
+	/*This component is used to simulate the movement of our skill*/
 	UPROPERTY(VisibleAnywhere)
-	class UProjectileMovementComponent* ProjectileMovementComp;
-
-	/** The Particle comp which emits the active particle system */
+	UProjectileMovementComponent* ProjectileMovementComp;
+	
+	/*The particle comp which emits the active particle system*/
 	UPROPERTY(VisibleAnywhere)
-	class UParticleSystemComponent* ParticleComp;
+	UParticleSystemComponent* ParticleComp;
 
-	/** The paticle system for our projectible when traveling */
+	/*The particle system for our projectile when traveling*/
 	UPROPERTY(EditDefaultsOnly)
-	class UParticleSystem* ProjectileFX;
+	UParticleSystem* ProjectileFX;
 
-	/** The particle system for collision */
+	/*The particle system for our collision*/
 	UPROPERTY(EditDefaultsOnly)
-	class UParticleSystem* ProjectileCollisionFX;
+	UParticleSystem* ProjectileCollisionFX;
 
-	/** The skill texture */
+	/*The skill texture*/
 	UPROPERTY(EditDefaultsOnly)
-	class UTexture* SkillTexture;
+	UTexture* SkillTexture;
 
-	/** The time that our skill will get destroyed */
+	/*The time (after a collision has happened) that our skill will get destroyed*/
 	UPROPERTY(EditAnywhere)
 	float DestroyDelay = 1.5f;
 
-	/** The skill type of the skill */
+	/*The skill type of the skill*/
 	UPROPERTY(EditDefaultsOnly)
 	ESkillType SkillType;
 };

@@ -26,16 +26,6 @@ void USkillsComponent::BeginPlay()
     
 }
 
-
-// Called every frame
-void USkillsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-    Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-    // ...
-}
-
-
 UTexture* USkillsComponent::GetSkillTexture(int32 SkillNum)
 {
     if (SkillsArray.IsValidIndex(SkillNum))

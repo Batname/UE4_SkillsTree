@@ -71,20 +71,31 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 
+	/*Returns the skills component*/
+	UFUNCTION(BlueprintCallable,Category=TLSkillsTree)
+	USkillsComponent* GetSkillsComponent() const { return SkillsComponent; }
+
+
+	//----------------------------------------------------------------
+	//Skills Tree
+	//----------------------------------------------------------------
+
 private:
-	/** Return a fixed transform base on the given spring arm */
+
+	/*Returns a fixed transform based on the given spring arm comp*/
 	FTransform GetFixedSpringArmTransform(USpringArmComponent* SpringArm);
 
-	/** Return an array of transform in order to determine how many skills will get spawned */
+	/*Returns an array of transform in order to determine how many skills will get spawned*/
 	TArray<FTransform> GetSpawnTransforms(int32 level);
 
 protected:
-	/** The root component which the spring arm component will be attached */
+
+	/*The root component in which the spring arm components will be attached*/
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* SkillsRootComp;
 
 	UPROPERTY(VisibleAnywhere)
-	USpringArmComponent* LevelOneSpringArm;	
+	USpringArmComponent* LevelOneSpringArm;
 
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* LevelTwoSpringArm;
@@ -92,12 +103,11 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	USpringArmComponent* LevelThreeSpringArm;
 
-	/** Skills Component reference */
-	UPROPERTY(VisibleAnywhere)
+	/*Skills Component reference*/
+	UPROPERTY(VisibleAnywhere/*, meta = (AllowPrivateAccess = "true")*/)
 	USkillsComponent* SkillsComponent;
 
-	/** Fires a skill */
+	/*Fires a skill*/
 	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
 	void Fire(bool bShouldFireSecondary = false);
 };
-
