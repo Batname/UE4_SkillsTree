@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "SkillComponent.h"
 #include "SkillsTreeCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -68,5 +69,35 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+
+private:
+	/** Return a fixed transform base on the given spring arm */
+	FTransform GetFixedSpringArmTransform(USpringArmComponent* SpringArm);
+
+	/** Return an array of transform in order to determine how many skills will get spawned */
+	TArray<FTransform> GetSpawnTransforms(int32 level);
+
+protected:
+	/** The root component which the spring arm component will be attached */
+	UPROPERTY(VisibleAnywhere)
+	USceneComponent* SkillsRootComp;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* LevelOneSpringArm;	
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* LevelTwoSpringArm;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* LevelThreeSpringArm;
+
+	/** Skills Component reference */
+	UPROPERTY(VisibleAnywhere)
+	USkillComponent* SkillsComponent;
+
+	/** Fires a skill */
+	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
+	void Fire(bool bShouldFireSecondary = false);
 };
 
