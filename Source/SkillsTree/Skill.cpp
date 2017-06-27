@@ -32,7 +32,15 @@ ASkill::ASkill()
 void ASkill::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+    SphereComp->OnComponentHit.AddDynamic(this, &ASkill::OnHit);
+
+
+    if (ProjectileFX)
+    {
+        ParticleComp->SetTemplate(ProjectileFX);
+        ParticleComp->Activate();
+    }	
 }
 
 // Called every frame
@@ -47,7 +55,12 @@ void ASkill::OnConstruction(const FTransform& Transform)
 {
 
     Super::OnConstruction(Transform);
-    // TODO add implementation
+    
+    if (ProjectileFX)
+    {
+        ParticleComp->SetTemplate(ProjectileFX);
+        ParticleComp->Activate();
+    }
 }
 
 void ASkill::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpusle, const FHitResult& Hit)
