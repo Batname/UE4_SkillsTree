@@ -213,6 +213,11 @@ TArray<FTransform> ASkillsTreeCharacter::GetSpawnTransforms(int32 level)
 			SpawnPoints.Add(GetFixedSpringArmTransform(LevelThreeSpringArm));
 		}
 		default:
+			// break;
+			// for tests
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelOneSpringArm));
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelTwoSpringArm));
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelThreeSpringArm));
 			break;
 	}
 	return SpawnPoints;
