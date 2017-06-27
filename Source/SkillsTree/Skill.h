@@ -9,7 +9,7 @@
 UENUM(BlueprintType)
 enum class ESkillType : uint8
 {
-	WaterBlob,
+	WaterBall,
 	FileBall
 };
 
