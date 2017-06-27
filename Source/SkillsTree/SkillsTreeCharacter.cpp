@@ -61,8 +61,8 @@ ASkillsTreeCharacter::ASkillsTreeCharacter()
 	LevelTwoSpringArm->SetupAttachment(SkillsRootComp);
 	LevelThreeSpringArm->SetupAttachment(SkillsRootComp);
 
-	// !! USkillComponent instaad USkillsComponent
-	SkillsComponent = CreateDefaultSubobject<USkillComponent>(FName("SkillsComponent"));
+	// !! USkillsComponent instaad USkillsComponent
+	SkillsComponent = CreateDefaultSubobject<USkillsComponent>(FName("SkillsComponent"));
 
 
 }

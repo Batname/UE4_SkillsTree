@@ -8841,6 +8841,7 @@ HEADERS += \
 	"$$unrealRootPath/Engine/Plugins/Tests/ScreenshotTools/Source/ScreenshotTools/Public/ScreenshotTools.h" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/Skill.h" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillComponent.h" \
+	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsComponent.h" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTree.h" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTreeCharacter.h" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTreeGameMode.h" \

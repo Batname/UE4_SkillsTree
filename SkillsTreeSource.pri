@@ -6828,6 +6828,7 @@ SOURCES += \
 	"$$unrealRootPath/Engine/Plugins/Tests/ScreenshotTools/Source/ScreenshotTools/Private/ScreenshotTools.cpp" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/Skill.cpp" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillComponent.cpp" \
+	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsComponent.cpp" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTree.cpp" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTreeCharacter.cpp" \
 	"$$SkillsTreeRootPath/Source/SkillsTree/SkillsTreeGameMode.cpp" \

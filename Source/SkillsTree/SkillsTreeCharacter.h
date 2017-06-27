@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "SkillComponent.h"
+#include "SkillsComponent.h"
 #include "SkillsTreeCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -94,7 +94,7 @@ protected:
 
 	/** Skills Component reference */
 	UPROPERTY(VisibleAnywhere)
-	USkillComponent* SkillsComponent;
+	USkillsComponent* SkillsComponent;
 
 	/** Fires a skill */
 	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
