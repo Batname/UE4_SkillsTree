@@ -9,9 +9,9 @@ USkillComponent::USkillComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
+    bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -20,7 +20,12 @@ void USkillComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+    for (auto Skill : SkillsArray)
+    {
+        Skill->GetDefaultObject<ASkill>()->ResetLevel();
+    }
+
+    AvailableSkillPoints = InitialAvailableSkillsPoints;
 	
 }
 
@@ -33,3 +38,62 @@ void USkillComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// ...
 }
 
+
+UTexture* USkillComponent::GetSkillTexture(int32 SkillNum)
+{
+    if (SkillsArray.IsValidIndex(SkillNum))
+    {
+        return SkillsArray[SkillNum]->GetDefaultObject<ASkill>()->GetSkillTexture();
+    }
+    return nullptr;
+}
+
+int32 USkillComponent::GetSkillLevel(int32 SkillNum)
+{
+    if (SkillsArray.IsValidIndex(SkillNum))
+    {
+        return SkillsArray[SkillNum]->GetDefaultObject<ASkill>()->GetLevel();
+    }
+    return 0;
+}
+
+ASkill* USkillComponent::GetSkillByType(ESkillType SkillType)
+{
+    for (auto It : SkillsArray)
+    {
+        ASkill* Skill = It->GetDefaultObject<ASkill>();
+        if (Skill->GetSkillType() == SkillType)
+        {
+            return Skill;
+        }
+    }
+    return nullptr;
+}
+
+
+int32 USkillComponent::AdvanceSkillLevel(ASkill* SkillToLevelUp)
+{
+    if (SkillToLevelUp && AvailableSkillPoints > 0 && !SkillToLevelUp->IsMaxLevel())
+    {
+        AvailableSkillPoints--;
+        SkillToLevelUp->AdvanceLevel();
+        return SkillToLevelUp->GetLevel();
+    }
+    else if (SkillToLevelUp)
+    {
+        return SkillToLevelUp->GetLevel();
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void USkillComponent::ResetSkillPoints()
+{
+    AvailableSkillPoints = InitialAvailableSkillsPoints;
+    for (auto It : SkillsArray)
+    {
+        It->GetDefaultObject<ASkill>()->ResetLevel();
+    }
+}

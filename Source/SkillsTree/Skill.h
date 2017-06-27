@@ -40,6 +40,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
 	void AdvanceLevel() { CurrentLevel + 1 > MaxLevel ? 1 : ++CurrentLevel; }
 
+	
+	/** Returns the level of the current skill */
+	UFUNCTION(BlueprintCallable,Category = TLSkillsTree)
+	int32 GetLevel() { return CurrentLevel; }
+
 	/** reset the level of the skills - 0 that meens that the playes will not be able to fire */
 	UFUNCTION(BlueprintCallable, Category = TLSkillsTree)
 	void ResetLevel() { CurrentLevel = 0; }
