@@ -152,3 +152,65 @@ void ASkillsTreeCharacter::MoveRight(float Value)
 		AddMovementInput(Direction, Value);
 	}
 }
+
+FTransform ASkillsTreeCharacter::GetFixedSpringArmTransform(USpringArmComponent* SpringArm)
+{
+	FTransform result;
+	if (SpringArm)
+	{
+		result = SpringArm->GetComponentTransform();
+		// We want a fixed location for our transform, since we do not want spawn our skills
+		// right on tp of our character
+		result.SetLocation(result.GetLocation() + SpringArm->GetForwardVector() * 100);
+	}
+
+	return result;
+}
+
+void ASkillsTreeCharacter::Fire(bool bShouldFireSecondary)
+{
+	// Dummy logic for 2 skills
+	TSubclassOf<ASkill> SkillBP = (bShouldFireSecondary && SkillsComponent->SkillsArray.IsValidIndex(1)) ? SkillsComponent->SkillsArray[1] : SkillsComponent->SkillsArray[0];
+
+	if (SkillBP)
+	{
+		FActorSpawnParameters ActorSpawnParams;
+
+		TArray<FTransform> SpawnTransforms = GetSpawnTransforms(SkillBP->GetDefaultObject<ASkill>()->GetLevel());
+
+		for (int32 i = 0; i < SpawnTransforms.Num(); i++)
+		{
+			GetWorld()->SpawnActor<ASkill>(SkillBP, SpawnTransforms[i]);
+		}
+	}
+}
+
+TArray<FTransform> ASkillsTreeCharacter::GetSpawnTransforms(int32 level)
+{
+	TArray<FTransform> SpawnPoints;
+	switch (level)
+	{
+		case 1:
+		{
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelOneSpringArm));
+			break;
+		}
+		case 2:
+		{
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelTwoSpringArm));
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelThreeSpringArm));
+			break;
+		}
+		case 3:
+		{
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelOneSpringArm));
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelTwoSpringArm));
+			SpawnPoints.Add(GetFixedSpringArmTransform(LevelThreeSpringArm));
+			break;
+		}
+		default:
+			break;
+	}
+
+	return SpawnPoints;
+}
